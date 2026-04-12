@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 5971849601691352150}
   - component: {fileID: 3146861465947066719}
   - component: {fileID: 2458258409267337787}
+  - component: {fileID: 6557825467140643211}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -191,7 +192,7 @@ MonoBehaviour:
   clientProjectilePrefab: {fileID: 2847628296019975438, guid: 5f9e0ae109671dd418925fce83f2dabe, type: 3}
   muzzleFlash: {fileID: 1399705711611345955}
   playerCollider: {fileID: 184867957430580420}
-  wallet: {fileID: 0}
+  wallet: {fileID: 6557825467140643211}
   projectileSpeed: 30
   fireRate: 0.75
   muzzleFlashDuration: 0.075
@@ -211,6 +212,24 @@ MonoBehaviour:
   ShowTopMostFoldoutHeaderGroup: 1
   <MaxHealth>k__BackingField: 100
   CurrentHealth:
+    UpdateTraits:
+      MinSecondsBetweenUpdates: 0
+      MaxSecondsBetweenUpdates: 0
+    m_InternalValue: 0
+--- !u!114 &6557825467140643211
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 143417338257459549}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 165768404a76c7c4fae575401b05815b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CoinWallet
+  ShowTopMostFoldoutHeaderGroup: 1
+  TotalCoins:
     UpdateTraits:
       MinSecondsBetweenUpdates: 0
       MaxSecondsBetweenUpdates: 0
