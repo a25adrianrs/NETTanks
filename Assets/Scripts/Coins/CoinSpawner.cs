@@ -25,7 +25,7 @@ public class CoinSpawner : NetworkBehaviour
 
         // Obtiene el radio del collider de la moneda
         coinRadius = coinPrefab.GetComponent<CircleCollider2D>().radius;
-        // Genera todas las monedas al inicio
+        // Genera tantas monedas como el máximo definido
         for (int i = 0; i < maxCoins; i++)
         {
             SpawnCoin();
@@ -45,7 +45,7 @@ public class CoinSpawner : NetworkBehaviour
         // La spawnea en red para que todos los clientes la vean
         coinInstance.GetComponent<NetworkObject>().Spawn();
 
-        // Se suscribe al evento cuando la moneda es recogida
+        // Se dispara el evento cuando la moneda es recogida para recolocarla
         coinInstance.OnCollected += HandleCoinCollected;
     }
 
