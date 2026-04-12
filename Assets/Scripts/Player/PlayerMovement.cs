@@ -27,6 +27,13 @@ public class PlayerMovement : NetworkBehaviour
         // Suscribirse al evento de movimiento del InputReader
         // Esto permite que el método HandleMove se llame cada vez que el jugador proporciona una entrada de movimiento
         inputReader.MoveEvent += HandleMove;
+
+        CameraFollow cameraFollow = Camera.main.GetComponent<CameraFollow>();
+
+        if (cameraFollow != null)
+        {
+            cameraFollow.SetTarget(transform);
+        }
     }
 
 
@@ -76,4 +83,6 @@ public class PlayerMovement : NetworkBehaviour
         // entrada de movimiento recibida
         previousMovementInput = movementInput;
     }
+
+
 }
