@@ -14,6 +14,7 @@ public class HostGameManager
     private string joinCode;
 
     private const int MaxConnections = 20;
+    // The name of the scene to load when the host starts the game. Make sure this matches the name of your game scene.
     private const string GameSceneName = "Game by Adrián";
 
     public async Task StartHostAsync()
