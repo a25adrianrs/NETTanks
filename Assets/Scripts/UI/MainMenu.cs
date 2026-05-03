@@ -1,16 +1,19 @@
+using TMPro;
 using UnityEngine;
 
 public class MainMenu : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    // Campo serializado para el campo de entrada del código de unión
+    [SerializeField] private TMP_InputField joinCodeField;
+
+    public async void StartHost()
     {
-        
+        //await HostSingleton.GaneManager.StartHostAsync();
+
     }
 
-    // Update is called once per frame
-    void Update()
+    public async void StartClient()
     {
-        
+        //await ClientSingleton.GameManager.StartClientAsync(joinCodeField.text);
     }
 }
