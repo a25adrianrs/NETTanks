@@ -10,19 +10,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 6205197567229724828, guid: 7e6a5bd5599336040a00b09621e41e30, type: 3}
       propertyPath: m_Name
-      value: RespawningCoin
-      objectReference: {fileID: 0}
-    - target: {fileID: 7321911762606449369, guid: 7e6a5bd5599336040a00b09621e41e30, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 7321911762606449369, guid: 7e6a5bd5599336040a00b09621e41e30, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 7321911762606449369, guid: 7e6a5bd5599336040a00b09621e41e30, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 0.5
+      value: RespawningCoin Variant
       objectReference: {fileID: 0}
     - target: {fileID: 7321911762606449369, guid: 7e6a5bd5599336040a00b09621e41e30, type: 3}
       propertyPath: m_LocalPosition.x
