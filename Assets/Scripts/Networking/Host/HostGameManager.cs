@@ -14,8 +14,6 @@ public class HostGameManager
     private string joinCode;
 
     private const int MaxConnections = 20;
-    // En la constante GameSceneName se debe poner el nombre de la escena del juego, que en este caso es "Game by Adrián"
-    // , pero si se cambia el nombre de la escena, se debe actualizar esta constante con el nuevo nombre
     private const string GameSceneName = "Game by Adrián";
 
     public async Task StartHostAsync()
@@ -43,7 +41,7 @@ public class HostGameManager
 
         UnityTransport transport = NetworkManager.Singleton.GetComponent<UnityTransport>();
 
-        RelayServerData relayServerData = AllocationUtils.ToRelayServerData(allocation, "udp");
+        RelayServerData relayServerData = AllocationUtils.ToRelayServerData(allocation, "dtls");
         transport.SetRelayServerData(relayServerData);
 
         NetworkManager.Singleton.StartHost();
