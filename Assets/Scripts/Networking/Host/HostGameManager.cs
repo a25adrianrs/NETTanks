@@ -14,6 +14,8 @@ public class HostGameManager
     private string joinCode;
 
     private const int MaxConnections = 20;
+    // En la constante GameSceneName se debe poner el nombre de la escena del juego, que en este caso es "Game by Adrián"
+    // , pero si se cambia el nombre de la escena, se debe actualizar esta constante con el nuevo nombre
     private const string GameSceneName = "Game by Adrián";
 
     public async Task StartHostAsync()
