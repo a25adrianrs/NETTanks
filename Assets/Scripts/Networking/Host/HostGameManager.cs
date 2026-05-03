@@ -14,8 +14,6 @@ public class HostGameManager
     private string joinCode;
 
     private const int MaxConnections = 20;
-    // El nombre de la escena del juego debe coincidir con el que tengas en tu proyecto. 
-    // Asegúrate de que esté agregado en la lista de escenas en Build Settings.
     private const string GameSceneName = "Game by Adrián";
 
     public async Task StartHostAsync()
