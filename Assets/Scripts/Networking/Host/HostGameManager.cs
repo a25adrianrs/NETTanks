@@ -24,6 +24,7 @@ public class HostGameManager
 
 
     private const int MaxConnections = 20;
+    // Constante para almacenar el nombre de la escena donde se desarrolla el juego
     private const string GameSceneName = "Game by Adrián";
 
     public async Task StartHostAsync()
