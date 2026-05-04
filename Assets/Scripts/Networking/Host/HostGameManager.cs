@@ -81,9 +81,7 @@ public class HostGameManager
 
         NetworkManager.Singleton.SceneManager.LoadScene(GameSceneName, LoadSceneMode.Single);
     }
-    // Corrutina que mantiene el lobby activo enviando un ping cada 15 segundos. 
-    // Si el host cierra el juego, el lobby se cerrará automáticamente después de unos segundos.
-    // Si el host pierde la conexión a internet, el lobby se cerrará automáticamente después de unos segundos.
+
     private IEnumerator HearbeatLobby(float waitTimeSeconds)
     {
         WaitForSecondsRealtime delay = new WaitForSecondsRealtime(waitTimeSeconds);
