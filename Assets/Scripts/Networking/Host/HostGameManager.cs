@@ -20,8 +20,6 @@ public class HostGameManager
     private string lobbyId;
 
     private const int MaxConnections = 20;
-    // Constante que almacena el nombre de la escena del juego, 
-    // para evitar errores de tipeo
     private const string GameSceneName = "Game by Adrián";
 
     public async Task StartHostAsync()
