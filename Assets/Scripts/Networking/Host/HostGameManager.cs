@@ -24,6 +24,8 @@ public class HostGameManager : IDisposable
 
 
     private const int MaxConnections = 20;
+
+    // Constante que almacena el nombre de la Escena Principal
     private const string GameSceneName = "Game by Adrián";
 
     public async Task StartHostAsync()
