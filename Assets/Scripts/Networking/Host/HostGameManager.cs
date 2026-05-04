@@ -14,7 +14,7 @@ using UnityEngine.SceneManagement;
 using System.Collections.Generic;
 using Unity.Services.Authentication;
 
-public class HostGameManager
+public class HostGameManager : IDisposable
 {
     private Allocation allocation;
     private string joinCode;
@@ -24,7 +24,6 @@ public class HostGameManager
 
 
     private const int MaxConnections = 20;
-    // Constante para almacenar el nombre de la escena donde se desarrolla el juego
     private const string GameSceneName = "Game by Adrián";
 
     public async Task StartHostAsync()
@@ -107,6 +106,27 @@ public class HostGameManager
             LobbyService.Instance.SendHeartbeatPingAsync(lobbyId);
             yield return delay;
         }
+    }
+
+    public async void Dispose()
+    {
+        HostSingleton.Instance.StopCoroutine(nameof(HearbeatLobby));
+
+        if (!string.IsNullOrEmpty(lobbyId))
+        {
+            try
+            {
+                await LobbyService.Instance.DeleteLobbyAsync(lobbyId);
+            }
+            catch (LobbyServiceException e)
+            {
+                Debug.Log(e);
+            }
+
+            lobbyId = string.Empty;
+        }
+
+        networkServer?.Dispose();
     }
 
 }
