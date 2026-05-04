@@ -14,7 +14,7 @@ using UnityEngine.SceneManagement;
 using System.Collections.Generic;
 using Unity.Services.Authentication;
 
-public class HostGameManager : IDisposable
+public class HostGameManager: IDisposable
 {
     private Allocation allocation;
     private string joinCode;
@@ -24,9 +24,7 @@ public class HostGameManager : IDisposable
 
 
     private const int MaxConnections = 20;
-
-    // Constante que almacena el nombre de la Escena Principal
-    private const string GameSceneName = "Game by Adrián";
+    private const string GameSceneName = "Game";
 
     public async Task StartHostAsync()
     {
@@ -53,7 +51,8 @@ public class HostGameManager : IDisposable
 
         UnityTransport transport = NetworkManager.Singleton.GetComponent<UnityTransport>();
 
-        RelayServerData relayServerData = AllocationUtils.ToRelayServerData(allocation, "dtls");
+        //RelayServerData relayServerData = AllocationUtils.ToRelayServerData(allocation,"dtls");
+        RelayServerData relayServerData = AllocationUtils.ToRelayServerData(allocation,"wss"); // Para WebGL
         transport.SetRelayServerData(relayServerData);
 
         try
@@ -72,7 +71,7 @@ public class HostGameManager : IDisposable
             string playerName = PlayerPrefs.GetString(NameSelector.PlayerNameKey, "Unknown");
             Lobby lobby = await LobbyService.Instance.CreateLobbyAsync(
                 $"{playerName}'s Lobby", MaxConnections, lobbyOptions);
-
+            
             lobbyId = lobby.Id;
 
             HostSingleton.Instance.StartCoroutine(HearbeatLobby(15));
@@ -114,13 +113,13 @@ public class HostGameManager : IDisposable
     {
         HostSingleton.Instance.StopCoroutine(nameof(HearbeatLobby));
 
-        if (!string.IsNullOrEmpty(lobbyId))
+        if(!string.IsNullOrEmpty(lobbyId))
         {
             try
             {
                 await LobbyService.Instance.DeleteLobbyAsync(lobbyId);
             }
-            catch (LobbyServiceException e)
+            catch(LobbyServiceException e)
             {
                 Debug.Log(e);
             }
