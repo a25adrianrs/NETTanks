@@ -853,6 +853,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7112039310166338191, guid: 1ba0c980c6e65c9489fdb48d13028081, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 399536198}
+    - target: {fileID: 7112039310166338191, guid: 1ba0c980c6e65c9489fdb48d13028081, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: RefreshList
+      objectReference: {fileID: 0}
     - target: {fileID: 7746772481861259828, guid: 1ba0c980c6e65c9489fdb48d13028081, type: 3}
       propertyPath: m_Name
       value: LobbiesBackground

@@ -12,6 +12,7 @@ using Unity.Services.Lobbies.Models;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using System.Collections.Generic;
+using Unity.Services.Authentication;
 
 public class HostGameManager
 {
@@ -23,11 +24,6 @@ public class HostGameManager
 
 
     private const int MaxConnections = 20;
-    // Constante que almacena el nombre de la escena del juego. 
-    // Esto se utiliza para cargar la escena del juego cuando el host inicia el juego. Al usar una constante, 
-    // se asegura que el nombre de la escena sea consistente en todo el código y facilita su mantenimiento. 
-    // Si se necesita cambiar el nombre de la escena, solo se tendría que actualizar esta constante en lugar de buscar y 
-    // reemplazar en todo el código.
     private const string GameSceneName = "Game by Adrián";
 
     public async Task StartHostAsync()
@@ -89,7 +85,8 @@ public class HostGameManager
 
         UserData userData = new UserData
         {
-            userName = PlayerPrefs.GetString(NameSelector.PlayerNameKey, "Missing Name")
+            userName = PlayerPrefs.GetString(NameSelector.PlayerNameKey, "Missing Name"),
+            userAuthId = AuthenticationService.Instance.PlayerId
         };
         string payload = JsonUtility.ToJson(userData);
         byte[] payloadBytes = Encoding.UTF8.GetBytes(payload);
