@@ -1,9 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
 using Unity.Netcode;
 using UnityEngine;
 
 /// <summary>
+<<<<<<< HEAD
 /// Este script gestiona el dinero (monedas) del jugador en el juego multiplicador.
 /// Sincroniza el balance de monedas a través de la red para que todos vean el mismo valor.
 /// Las monedas se gastan para disparar y se ganan recolectando monedas del mapa.
@@ -21,6 +20,15 @@ public class CoinWallet : NetworkBehaviour
     /// Se ejecuta cuando el jugador gasta monedas (por ejemplo, para disparar).
     /// Resta la cantidad especificada del total de monedas del jugador.
     /// </summary>
+=======
+/// Almacena y sincroniza las monedas recolectadas por el jugador.
+/// Solo el servidor actualiza el total; los clientes reciben el valor por red.
+/// </summary>
+public class CoinWallet : NetworkBehaviour
+{
+    public NetworkVariable<int> TotalCoins = new NetworkVariable<int>();
+
+>>>>>>> 7744943846ddb7baf55f522dd160659aa7c42d59
     public void SpendCoins(int costToFire)
     {
         // Resta el costo del disparo del total de monedas del jugador
@@ -28,6 +36,7 @@ public class CoinWallet : NetworkBehaviour
         TotalCoins.Value -= costToFire;
     }
 
+<<<<<<< HEAD
     /// <summary>
     /// Se ejecuta automáticamente cuando el jugador entra en contacto (colisiona) con una moneda.
     /// Es el mecanismo por el cual el jugador recolecta monedas del mapa.
@@ -50,6 +59,15 @@ public class CoinWallet : NetworkBehaviour
 
         // Suma el valor de la moneda recolectada al total de monedas del jugador
         // Esto sincroniza automáticamente con todos los clientes conectados
+=======
+    private void OnTriggerEnter2D(Collider2D col)
+    {
+        if (!col.TryGetComponent<Coin>(out Coin coin)) { return; }
+
+        int coinValue = coin.Collect();
+        if (!IsServer) { return; }
+
+>>>>>>> 7744943846ddb7baf55f522dd160659aa7c42d59
         TotalCoins.Value += coinValue;
     }
 }

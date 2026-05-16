@@ -1,10 +1,9 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using Unity.Netcode;
 using UnityEngine;
 
 /// <summary>
+<<<<<<< HEAD
 /// Este script gestiona la vida (salud) de un objeto en el juego multiplicador.
 /// Sincroniza la vida a través de la red para que todos los jugadores vean el mismo estado de salud.
 /// Lanza eventos cuando el objeto muere para permitir que otros scripts reaccionen (como reproducir sonidos o mostrar explosiones).
@@ -23,6 +22,14 @@ public class Health : NetworkBehaviour
     /// NetworkVariable<int> significa que todos los jugadores ven el mismo valor actualizado en tiempo real.
     /// Es esencial para multiplicador para que todos vean cuando alguien recibe daño.
     /// </summary>
+=======
+/// Controla la vida de un objeto con sincronización de red.
+/// Solo el servidor inicializa y modifica la salud; los clientes reciben el valor actualizado.
+/// </summary>
+public class Health : NetworkBehaviour
+{
+    [field: SerializeField] public int MaxHealth { get; private set; } = 100;
+>>>>>>> 7744943846ddb7baf55f522dd160659aa7c42d59
     public NetworkVariable<int> CurrentHealth = new NetworkVariable<int>();
 
     /// <summary>
@@ -30,12 +37,15 @@ public class Health : NetworkBehaviour
     /// Evita procesar daño adicional o eventos de muerte múltiples.
     /// </summary>
     private bool isDead;
+<<<<<<< HEAD
 
     /// <summary>
     /// Evento que se dispara cuando el objeto muere.
     /// Otros scripts se pueden suscribir a este evento para reaccionar a la muerte.
     /// Por ejemplo: reproducir sonido de muerte, mostrar explosión, dar puntos al asesino, etc.
     /// </summary>
+=======
+>>>>>>> 7744943846ddb7baf55f522dd160659aa7c42d59
     public Action<Health> OnDie;
 
     /// <summary>
@@ -45,12 +55,17 @@ public class Health : NetworkBehaviour
     /// </summary>
     public override void OnNetworkSpawn()
     {
+<<<<<<< HEAD
         // Solo el servidor puede establecer la vida inicial
         // Los clientes reciben automáticamente el valor actualizado del servidor
         if (!IsServer) { return; }
 
         // Inicializa la vida al máximo valor
         // Esto sincroniza automáticamente con todos los clientes conectados
+=======
+        if (!IsServer) { return; }
+
+>>>>>>> 7744943846ddb7baf55f522dd160659aa7c42d59
         CurrentHealth.Value = MaxHealth;
     }
 

@@ -2,10 +2,17 @@
 using Unity.Netcode;
 using UnityEngine;
 
+<<<<<<< HEAD
 /// <summary>
 /// Este script hace que la torreta (cañón) del tanque apunte hacia la posición del ratón del jugador.
 /// Sincroniza la rotación de la torreta para todos los jugadores en la red.
 /// Cada jugador solo controla la puntería de su propio tanque.
+=======
+//El script debe ser un NetworkBehavioour y no un MonoBehaviour para poder usar las funcionalidades de red.
+/// <summary>
+/// Hace que la torreta del jugador apunte hacia el cursor del jugador local.
+/// Solo el propietario del objeto actualiza la rotación.
+>>>>>>> 7744943846ddb7baf55f522dd160659aa7c42d59
 /// </summary>
 public class PlayerAiming : NetworkBehaviour
 {
@@ -22,11 +29,14 @@ public class PlayerAiming : NetworkBehaviour
     /// </summary>
     [SerializeField] private Transform turretTransform;
 
+<<<<<<< HEAD
     /// <summary>
     /// Se ejecuta en LateUpdate (después de que otros scripts hayan actualizado sus valores).
     /// Es ideal para calcular rotaciones de cámara y orientación basadas en entrada del jugador.
     /// En este caso, LateUpdate asegura que el InputReader ya ha actualizado la posición del ratón.
     /// </summary>
+=======
+>>>>>>> 7744943846ddb7baf55f522dd160659aa7c42d59
     private void LateUpdate()
     {
         // Verifica si este objeto es propiedad del jugador local

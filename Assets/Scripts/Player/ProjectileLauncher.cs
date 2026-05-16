@@ -2,6 +2,7 @@ using Unity.Netcode;
 using UnityEngine;
 
 /// <summary>
+<<<<<<< HEAD
 /// Este script gestiona el disparo de proyectiles en multiplicador.
 /// Crea un disparo visual inmediato en el cliente para feedback rápido y un proyectil real en el servidor
 /// que sincroniza con todos los jugadores. Esto asegura que todos vean el disparo al mismo tiempo.
@@ -53,6 +54,27 @@ public class ProjectileLauncher : NetworkBehaviour
     /// Se utiliza para verificar si el jugador tiene suficientes monedas para disparar
     /// y para gastar monedas cuando se dispara.
     /// </summary>
+=======
+/// Gestiona el disparo del jugador en red.
+/// El cliente crea un proyectil visual inmediato y el servidor genera el proyectil real en la partida.
+/// </summary>
+public class ProjectileLauncher : NetworkBehaviour
+{
+    [Header("References")]
+    // Entrada del jugador para disparar
+    [SerializeField] private InputReader inputReader;
+    // Punto desde donde se genera el proyectil
+    [SerializeField] private Transform projectileSpawnPoint;
+    // Prefab usado por el servidor para la bala real
+    [SerializeField] private GameObject serverProjectilePrefab;
+    // Prefab usado por el cliente para el proyectil visual inmediato
+    [SerializeField] private GameObject clientProjectilePrefab;
+    // Efecto visual de fogonazo al disparar
+    [SerializeField] private GameObject muzzleFlash;
+    // Collider del jugador para evitar que el proyectil choque con él
+    [SerializeField] private Collider2D playerCollider;
+    // Monedas que consume el jugador para disparar
+>>>>>>> 7744943846ddb7baf55f522dd160659aa7c42d59
     [SerializeField] private CoinWallet wallet;
 
     /// <summary>
@@ -81,10 +103,13 @@ public class ProjectileLauncher : NetworkBehaviour
     /// </summary>
     [SerializeField] private int costToFire;
 
+<<<<<<< HEAD
     /// <summary>
     /// Bandera que indica si el jugador está presionando el botón de disparo.
     /// Se actualiza en HandlePrimaryFire y se verifica en Update.
     /// </summary>
+=======
+>>>>>>> 7744943846ddb7baf55f522dd160659aa7c42d59
     private bool shouldFire;
 
     /// <summary>
@@ -101,17 +126,23 @@ public class ProjectileLauncher : NetworkBehaviour
     /// </summary>
     private float muzzleFlashTimer;
 
+<<<<<<< HEAD
     /// <summary>
     /// Se ejecuta cuando el objeto aparece en la red.
     /// Suscribimos al evento de disparo solo si somos el dueño de este tanque.
     /// </summary>
+=======
+>>>>>>> 7744943846ddb7baf55f522dd160659aa7c42d59
     public override void OnNetworkSpawn()
     {
         // Solo el dueño puede disparar
         if (!IsOwner) { return; }
+<<<<<<< HEAD
 
         // Suscribirse al evento de disparo del InputReader
         // HandlePrimaryFire se ejecutará cada vez que se presione/suelte el botón de disparo
+=======
+>>>>>>> 7744943846ddb7baf55f522dd160659aa7c42d59
         inputReader.PrimaryFireEvent += HandlePrimaryFire;
     }
 
@@ -139,6 +170,7 @@ public class ProjectileLauncher : NetworkBehaviour
         this.shouldFire = shouldFire;
     }
 
+<<<<<<< HEAD
     /// <summary>
     /// Se ejecuta cada frame.
     /// Controla:
@@ -150,13 +182,20 @@ public class ProjectileLauncher : NetworkBehaviour
     {
         // Manejar el temporizador del fogonazo del cañón
         // Si el fogonazo aún está activo (timer > 0), reducirlo
+=======
+    private void Update()
+    {
+        // Controla la duración del fogonazo en pantalla
+>>>>>>> 7744943846ddb7baf55f522dd160659aa7c42d59
         if (muzzleFlashTimer > 0f)
         {
-            // Reducir el temporizador del fogonazo en función del tiempo transcurrido desde el último frame
             muzzleFlashTimer -= Time.deltaTime;
+<<<<<<< HEAD
 
             // Si el temporizador del fogonazo ha expirado (≤ 0), desactivar el objeto del fogonazo
             // para que desaparezca visualmente
+=======
+>>>>>>> 7744943846ddb7baf55f522dd160659aa7c42d59
             if (muzzleFlashTimer <= 0f)
             {
                 // Desactiva el GameObject del fogonazo para que no sea visible
@@ -166,15 +205,20 @@ public class ProjectileLauncher : NetworkBehaviour
 
         // Solo el dueño de este tanque puede disparar
         if (!IsOwner) { return; }
+<<<<<<< HEAD
 
         // Manejar el temporizador de cadencia de disparo
         // Si el temporizador es > 0, significa que aún hay que esperar antes de poder disparar de nuevo
         if (timer > 0)
+=======
+        if (timer > 0f)
+>>>>>>> 7744943846ddb7baf55f522dd160659aa7c42d59
         {
             // Reduce el temporizador basado en el tiempo que ha pasado
             timer -= Time.deltaTime;
         }
 
+<<<<<<< HEAD
         // Si el jugador no está intentando disparar, salir del método
         if (!shouldFire) { return; }
 
@@ -205,6 +249,18 @@ public class ProjectileLauncher : NetworkBehaviour
     /// Este proyectil no causa daño realmente, solo se ve.
     /// Se spawnea inmediatamente sin esperar al servidor.
     /// </summary>
+=======
+        if (!shouldFire) { return; }
+        if (timer > 0f) { return; }
+        if (wallet.TotalCoins.Value < costToFire) { return; }
+
+        PrimaryFireServerRpc(projectileSpawnPoint.position, projectileSpawnPoint.up);
+        SpawnDummyProjectile(projectileSpawnPoint.position, projectileSpawnPoint.up);
+        timer = 1f / fireRate;
+    }
+
+    // Crea un proyectil visual en el cliente para dar feedback inmediato al jugador.
+>>>>>>> 7744943846ddb7baf55f522dd160659aa7c42d59
     private void SpawnDummyProjectile(Vector3 position, Vector3 up)
     {
         // Activa el fogonazo del cañón para mostrar el efecto de disparo
@@ -213,6 +269,7 @@ public class ProjectileLauncher : NetworkBehaviour
         // Reinicia el temporizador del fogonazo para que brille durante la duración especificada
         muzzleFlashTimer = muzzleFlashDuration;
 
+<<<<<<< HEAD
         // Instancia un proyectil visual local en el cliente
         // Este proyectil es solo para ver, no causa daño ni se sincroniza con otros jugadores
         GameObject projectileInstance = Instantiate(clientProjectilePrefab, position, Quaternion.identity);
@@ -223,6 +280,10 @@ public class ProjectileLauncher : NetworkBehaviour
 
         // Ignora colisiones entre el jugador y su propio proyectil
         // Evita que el proyectil golpee al jugador que lo disparó
+=======
+        GameObject projectileInstance = Instantiate(clientProjectilePrefab, position, Quaternion.identity);
+        projectileInstance.transform.up = up;
+>>>>>>> 7744943846ddb7baf55f522dd160659aa7c42d59
         Physics2D.IgnoreCollision(playerCollider, projectileInstance.GetComponent<Collider2D>());
 
         // Si el proyectil tiene un Rigidbody2D, se le asigna velocidad
@@ -241,6 +302,7 @@ public class ProjectileLauncher : NetworkBehaviour
     [Rpc(SendTo.Server)]
     private void PrimaryFireServerRpc(Vector3 position, Vector3 up)
     {
+<<<<<<< HEAD
         // Verificar si el servidor tiene suficientes monedas del jugador (si es que se cambió en el servidor)
         // Esto es una verificación adicional en el servidor para evitar trucos
         if (wallet.TotalCoins.Value < costToFire) { return; }
@@ -262,13 +324,25 @@ public class ProjectileLauncher : NetworkBehaviour
 
         // Si el proyectil tiene un componente DealDamageOnContact,
         // se establece el propietario del daño para que el sistema sepa quién disparó
+=======
+        if (wallet.TotalCoins.Value < costToFire) { return; }
+        wallet.SpendCoins(costToFire);
+
+        GameObject projectileInstance = Instantiate(serverProjectilePrefab, position, Quaternion.identity);
+        projectileInstance.transform.up = up;
+        Physics2D.IgnoreCollision(playerCollider, projectileInstance.GetComponent<Collider2D>());
+
+>>>>>>> 7744943846ddb7baf55f522dd160659aa7c42d59
         if (projectileInstance.TryGetComponent<DealDamageOnContact>(out DealDamageOnContact dealDamage))
         {
             // OwnerClientId es el ID de la red del jugador que posee este tanque
             dealDamage.SetOwner(OwnerClientId);
         }
 
+<<<<<<< HEAD
         // Configurar la velocidad del proyectil para que se mueva hacia la dirección del cañón
+=======
+>>>>>>> 7744943846ddb7baf55f522dd160659aa7c42d59
         if (projectileInstance.TryGetComponent<Rigidbody2D>(out Rigidbody2D rb))
         {
             // Multiplica la dirección (transform.up) por la velocidad para obtener la velocidad final
