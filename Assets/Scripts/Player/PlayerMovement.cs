@@ -4,7 +4,10 @@
 using Unity.Netcode;
 using UnityEngine;
 
-// Ademas el script debe ser un NetworkBehavioour y no un MonoBehaviour para poder usar las funcionalidades de red.
+/// <summary>
+/// Controla el movimiento del jugador local y asigna la cámara al jugador propietario.
+/// Solo el cliente que es dueño de este objeto procesa la entrada.
+/// </summary>
 public class PlayerMovement : NetworkBehaviour
 {
     [Header("References")]
@@ -20,24 +23,22 @@ public class PlayerMovement : NetworkBehaviour
 
     private Vector2 previousMovementInput;
 
-    // Metodo que se llama cuando el objeto se crea el objeto en la red;
     public override void OnNetworkSpawn()
-    { // Verificar si el objeto es propiedad del cliente local antes de suscribirse al evento
+    {
+        // Verificar si el objeto es propiedad del cliente local antes de suscribirse al evento
         if (!IsOwner) return;
+
         // Suscribirse al evento de movimiento del InputReader
         // Esto permite que el método HandleMove se llame cada vez que el jugador proporciona una entrada de movimiento
         inputReader.MoveEvent += HandleMove;
 
         CameraFollow cameraFollow = Camera.main.GetComponent<CameraFollow>();
-
         if (cameraFollow != null)
         {
             cameraFollow.SetTarget(transform);
         }
     }
 
-
-    // Metodo que se llama cuando el objeto se destruye en la red
     public override void OnNetworkDespawn()
     {
         // Verificar si el objeto es propiedad del cliente local antes de desuscribirse del evento
@@ -47,42 +48,25 @@ public class PlayerMovement : NetworkBehaviour
         inputReader.MoveEvent -= HandleMove;
     }
 
-    // En el método Update, se aplica la rotación al cuerpo del jugador 
-    //en función de la entrada de movimiento anterior y la tasa de giro. En el método FixedUpdate, 
-    // se actualiza la velocidad lineal del Rigidbody2D para mover al jugador en la dirección que 
-    // está mirando, multiplicando la velocidad de movimiento por la entrada de movimiento anterior y 
-    // la dirección hacia adelante del cuerpo del jugador.
-    void Update()
+    private void Update()
     {
-        //El codigo solo se ejecuta para el propietario del objeto, 
-        // evitando que otros clientes puedan controlar el movimiento de este jugador. 
-        // Si el objeto no es propiedad del cliente local,
         if (!IsOwner) return;
-        // // Calcula cuánto debe girar el tanque en este frame según el input horizontal,
+        // Calcula cuánto debe girar el tanque en este frame según el input horizontal,
         // la velocidad de giro y el tiempo entre frames (para que el movimiento sea suave)
         float zRotation = previousMovementInput.x * -turningRate * Time.deltaTime;
         bodyTransform.Rotate(0f, 0f, zRotation);
-
     }
 
-    // En el método Update, se aplica la rotación al cuerpo del jugador
-    void FixedUpdate()
+    private void FixedUpdate()
     {
         if (!IsOwner) return;
         // Mueve el tanque hacia delante o atrás según el input vertical,
         // usando la dirección actual del tanque (hacia donde está mirando)
         rb.linearVelocity = movementSpeed * previousMovementInput.y * (Vector2)bodyTransform.up;
-
     }
 
-    // Método que maneja la entrada de movimiento del jugador, 
-    // actualizando la variable previousMovementInput con el valor de la entrada de movimiento recibida.
     private void HandleMove(Vector2 movementInput)
     {
-        // Actualizar la variable previousMovementInput con el valor de la 
-        // entrada de movimiento recibida
         previousMovementInput = movementInput;
     }
-
-
 }

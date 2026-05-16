@@ -1,15 +1,14 @@
 using Unity.Netcode;
 using UnityEngine;
 
+/// <summary>
+/// Inicia la conexión del cliente al servidor usando el NetworkManager global.
+/// Se puede enlazar a un botón de menú para unir al jugador a la partida.
+/// </summary>
 public class JoinServer : MonoBehaviour
 {
     public void Join()
     {
-        // Mediante el NetworkManager, iniciamos el cliente para conectarnos al servidor.
-        // Esto permitirá que el cliente se conecte al servidor y comience a recibir datos de la red.
-        // Singelton es una propiedad estática que proporciona acceso 
-        // a la instancia única del NetworkManager en la escena, se usa principalmente 
-        // para acceder a la instancia del NetworkManager desde cualquier lugar del código.
         NetworkManager.Singleton.StartClient();
     }
 }

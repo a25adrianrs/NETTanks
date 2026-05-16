@@ -1,11 +1,13 @@
-using System.Collections;
-using System.Collections.Generic;
 using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.UI;
 
 // Este script se encarga de mostrar la vida del objeto en una barra (UI)
 // y actualizarla automáticamente cuando cambia la vida en red
+/// <summary>
+/// Actualiza una barra de UI para reflejar la salud sincronizada del jugador.
+/// Se suscribe a los cambios de CurrentHealth en la red y ajusta el fill de la imagen.
+/// </summary>
 public class HealthDisplay : NetworkBehaviour
 {
     [Header("References")]
@@ -14,7 +16,6 @@ public class HealthDisplay : NetworkBehaviour
     // Referencia a la imagen de la barra de vida
     [SerializeField] private Image healthBarImage;
 
-    // Se ejecuta cuando el objeto aparece en la red
     public override void OnNetworkSpawn()
     {
         // Solo los clientes necesitan mostrar la UI (no el servidor)
@@ -27,7 +28,6 @@ public class HealthDisplay : NetworkBehaviour
         HandleHealthChanged(0, health.CurrentHealth.Value);
     }
 
-    // Se ejecuta cuando el objeto desaparece de la red
     public override void OnNetworkDespawn()
     {
         if (!IsClient) { return; }
@@ -35,7 +35,6 @@ public class HealthDisplay : NetworkBehaviour
         health.CurrentHealth.OnValueChanged -= HandleHealthChanged;
     }
 
-    // Este método se llama cada vez que cambia la vida
     private void HandleHealthChanged(int oldHealth, int newHealth)
     {
         // Ajusta el fill de la barra (0 = vacío, 1 = lleno)

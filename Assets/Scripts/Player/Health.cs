@@ -1,27 +1,23 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using Unity.Netcode;
 using UnityEngine;
 
+/// <summary>
+/// Controla la vida de un objeto con sincronización de red.
+/// Solo el servidor inicializa y modifica la salud; los clientes reciben el valor actualizado.
+/// </summary>
 public class Health : NetworkBehaviour
 {
-    // Vida máxima del objeto (editable en Unity pero no desde otros scripts)
     [field: SerializeField] public int MaxHealth { get; private set; } = 100;
-    // Vida actual sincronizada en red (todos los jugadores ven el mismo valor)
     public NetworkVariable<int> CurrentHealth = new NetworkVariable<int>();
 
     private bool isDead;
-    // Evento que se ejecuta cuando el objeto muere
     public Action<Health> OnDie;
 
     public override void OnNetworkSpawn()
     {
-        // Solo el servidor puede establecer la vida inicial
-
         if (!IsServer) { return; }
 
-        // Inicializa la vida al máximo
         CurrentHealth.Value = MaxHealth;
     }
     // Método para aplicar daño 

@@ -1,14 +1,17 @@
 using UnityEngine;
-using Unity.Netcode;
+
+/// <summary>
+/// Sigue a un objetivo en el mundo manteniendo la posición de la cámara en X e Y.
+/// No cambia la profundidad (Z) para mantener la vista en 2D.
+/// </summary>
 public class CameraFollow : MonoBehaviour
 {
     private Transform target;
-    void LateUpdate()
+
+    private void LateUpdate()
     {
-        // Si no tenemos target, no hacemos nada
         if (target == null) return;
 
-        // Mantiene la Z de la cámara 
         transform.position = new Vector3(
             target.position.x,
             target.position.y,
@@ -16,7 +19,10 @@ public class CameraFollow : MonoBehaviour
         );
     }
 
-    // Método para asignar el jugador a seguir
+    /// <summary>
+    /// Asigna el Transform del jugador que la cámara debe seguir.
+    /// Normalmente es llamado desde PlayerMovement cuando el jugador local se inicializa.
+    /// </summary>
     public void SetTarget(Transform newTarget)
     {
         target = newTarget;

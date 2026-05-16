@@ -1,10 +1,10 @@
-using System.Collections;
-using System.Collections.Generic;
 using Unity.Netcode;
 using UnityEngine;
 
-// Este script se encarga de generar monedas en el mapa en multiplayer
-// y recolocarlas cuando son recogidas
+/// <summary>
+/// Genera monedas en el mapa y las recoloca cuando son recogidas.
+/// El servidor crea las monedas en red para que todos los clientes las vean.
+/// </summary>
 public class CoinSpawner : NetworkBehaviour
 {
     [SerializeField] private RespawningCoin coinPrefab; // Prefab de la moneda
