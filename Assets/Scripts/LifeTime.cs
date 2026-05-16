@@ -1,13 +1,8 @@
 using UnityEngine;
 
 /// <summary>
-<<<<<<< HEAD
 /// Este script destruye automáticamente el objeto después de un tiempo específico.
 /// Es útil para efectos visuales, partículas o cualquier objeto temporal que debe desaparecer automáticamente.
-=======
-/// Destruye este objeto automáticamente después de un tiempo definido.
-/// Se usa en objetos temporales como proyectiles, efectos y partículas.
->>>>>>> 7744943846ddb7baf55f522dd160659aa7c42d59
 /// </summary>
 public class LifeTime : MonoBehaviour
 {
@@ -16,7 +11,6 @@ public class LifeTime : MonoBehaviour
     /// Se puede ajustar desde el Inspector de Unity.
     /// </summary>
     [SerializeField] private float lifeTime = 1f;
-<<<<<<< HEAD
 
     void Start()
     {
@@ -33,11 +27,5 @@ public class LifeTime : MonoBehaviour
     {
         // Destruye el GameObject (el objeto completo con todos sus componentes)
         Destroy(gameObject);
-=======
-
-    private void Start()
-    {
-        Destroy(gameObject, lifeTime);
->>>>>>> 7744943846ddb7baf55f522dd160659aa7c42d59
     }
 }

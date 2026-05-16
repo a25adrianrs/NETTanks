@@ -1,19 +1,13 @@
+using System.Collections;
+using System.Collections.Generic;
 using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.UI;
 
-<<<<<<< HEAD
 /// <summary>
 /// Este script se encarga de mostrar la vida del objeto en una barra visual (UI)
 /// y actualizarla automáticamente cuando cambia la vida en red.
 /// Convierte el valor numérico de la vida en un visual que el jugador puede entender fácilmente.
-=======
-// Este script se encarga de mostrar la vida del objeto en una barra (UI)
-// y actualizarla automáticamente cuando cambia la vida en red
-/// <summary>
-/// Actualiza una barra de UI para reflejar la salud sincronizada del jugador.
-/// Se suscribe a los cambios de CurrentHealth en la red y ajusta el fill de la imagen.
->>>>>>> 7744943846ddb7baf55f522dd160659aa7c42d59
 /// </summary>
 public class HealthDisplay : NetworkBehaviour
 {
@@ -29,13 +23,10 @@ public class HealthDisplay : NetworkBehaviour
     /// </summary>
     [SerializeField] private Image healthBarImage;
 
-<<<<<<< HEAD
     /// <summary>
     /// Se ejecuta cuando el objeto aparece en la red (se spawned).
     /// Es cuando configuramos las suscripciones a eventos para mantener la UI sincronizada.
     /// </summary>
-=======
->>>>>>> 7744943846ddb7baf55f522dd160659aa7c42d59
     public override void OnNetworkSpawn()
     {
         // Solo los clientes necesitan mostrar la UI (no el servidor)
@@ -44,21 +35,19 @@ public class HealthDisplay : NetworkBehaviour
 
         // Nos suscribimos al evento de cambio de vida del objeto Health
         // Cada vez que cambia CurrentHealth, se llama a HandleHealthChanged automáticamente
-        // OnValueChanged es un evento específico de NetworkVariable que se dispara cuando el valor cambiaHealth.CurrentHealth.OnValueChanged += HandleHealthChanged;
+        // OnValueChanged es un evento específico de NetworkVariable que se dispara cuando el valor cambia
+        health.CurrentHealth.OnValueChanged += HandleHealthChanged;
 
         // Actualizamos la barra inmediatamente con la vida actual
         // Esto evita que la barra muestre un valor incorrecto al spawnearse el objeto
         HandleHealthChanged(0, health.CurrentHealth.Value);
     }
 
-<<<<<<< HEAD
     /// <summary>
     /// Se ejecuta cuando el objeto desaparece de la red (se despawned).
     /// Es importante desuscribirse de eventos para evitar fugas de memoria.
     /// Las fugas de memoria ocurren cuando los objetos se destruyen pero los eventos siguen activos.
     /// </summary>
-=======
->>>>>>> 7744943846ddb7baf55f522dd160659aa7c42d59
     public override void OnNetworkDespawn()
     {
         if (!IsClient) { return; }
@@ -68,14 +57,11 @@ public class HealthDisplay : NetworkBehaviour
         health.CurrentHealth.OnValueChanged -= HandleHealthChanged;
     }
 
-<<<<<<< HEAD
     /// <summary>
     /// Este método se llama automáticamente cada vez que cambia la vida.
     /// Es el intermediario entre los datos de vida (Health.cs) y la visualización (barra de vida).
     /// Recibe la vida anterior (oldHealth) y la nueva vida (newHealth) para comparar.
     /// </summary>
-=======
->>>>>>> 7744943846ddb7baf55f522dd160659aa7c42d59
     private void HandleHealthChanged(int oldHealth, int newHealth)
     {
         // Ajusta el fill (relleno) de la barra de salud

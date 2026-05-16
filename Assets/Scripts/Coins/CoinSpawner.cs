@@ -1,15 +1,12 @@
+using System.Collections;
+using System.Collections.Generic;
 using Unity.Netcode;
 using UnityEngine;
 
 /// <summary>
-<<<<<<< HEAD
 /// Este script gestiona la generación y reaparición de monedas en el mapa en multiplicador.
 /// Solo el servidor genera las monedas en posiciones aleatorias válidas (sin colisiones).
 /// Cuando una moneda es recolectada, se mueve a una nueva posición y vuelve a aparecer.
-=======
-/// Genera monedas en el mapa y las recoloca cuando son recogidas.
-/// El servidor crea las monedas en red para que todos los clientes las vean.
->>>>>>> 7744943846ddb7baf55f522dd160659aa7c42d59
 /// </summary>
 public class CoinSpawner : NetworkBehaviour
 {
