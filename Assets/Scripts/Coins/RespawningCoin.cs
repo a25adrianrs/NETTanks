@@ -3,12 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-<<<<<<< HEAD
-public class RespawningCoin : Coin
-{
-    public event Action<RespawningCoin> OnCollected;
-
-=======
 /// <summary>
 /// Clase que representa una moneda que puede reaparecer después de ser recolectada.
 /// Hereda de la clase Coin abstracta y agrega la funcionalidad específica de reaparición.
@@ -28,7 +22,6 @@ public class RespawningCoin : Coin
     /// Se utiliza para detectar cambios de posición y mostrar la moneda cuando se mueve.
     /// Cuando el spawner reloca la moneda a una nueva posición, se detecta el cambio aquí.
     /// </summary>
->>>>>>> main
     private Vector3 previousPosition;
 
     /// <summary>
@@ -37,11 +30,8 @@ public class RespawningCoin : Coin
     /// </summary>
     private void Update()
     {
-<<<<<<< HEAD
-=======
         // Compara la posición actual con la posición anterior
         // Si son diferentes, significa que la moneda ha sido movida (ha reaparecido)
->>>>>>> main
         if (previousPosition != transform.position)
         {
             // Muestra la moneda llamando al método protegido Show(true)
@@ -49,13 +39,6 @@ public class RespawningCoin : Coin
             Show(true);
         }
 
-<<<<<<< HEAD
-        previousPosition = transform.position;
-    }
-
-    public override int Collect()
-    {
-=======
         // Guarda la posición actual como la anterior para la próxima comparación
         // Esto permite detectar cambios de posición en el siguiente frame
         previousPosition = transform.position;
@@ -71,7 +54,6 @@ public class RespawningCoin : Coin
     {
         // Si no es el servidor, simula la recolección mostrando la moneda como oculta
         // Esto proporciona feedback visual inmediato sin esperar al servidor
->>>>>>> main
         if (!IsServer)
         {
             // Oculta la moneda en el cliente para que el jugador vea que fue recolectada
@@ -80,12 +62,6 @@ public class RespawningCoin : Coin
             return 0;
         }
 
-<<<<<<< HEAD
-        if (alreadyCollected) { return 0; }
-
-        alreadyCollected = true;
-
-=======
         // Si la moneda ya ha sido recolectada previamente, no hacer nada
         // Evita que se cuente varias veces si múltiples jugadores la tocan a la vez
         if (alreadyCollected) { return 0; }
@@ -96,21 +72,17 @@ public class RespawningCoin : Coin
 
         // Dispara el evento OnCollected para notificar a los suscriptores
         // El spawner escucha este evento y reloca la moneda a una nueva posición
->>>>>>> main
         OnCollected?.Invoke(this);
 
         // Devuelve el valor de la moneda que se sumará al monedero del jugador
         return coinValue;
     }
 
-<<<<<<< HEAD
-=======
     /// <summary>
     /// Reinicia el estado de la moneda después de ser recolectada.
     /// Se llama por el spawner cuando reloca la moneda a una nueva posición.
     /// Permite que la moneda vuelva a ser recolectada después de su reaparición.
     /// </summary>
->>>>>>> main
     public void Reset()
     {
         // Pone la bandera alreadyCollected en false

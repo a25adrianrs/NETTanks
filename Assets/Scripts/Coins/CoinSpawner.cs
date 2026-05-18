@@ -3,20 +3,6 @@ using System.Collections.Generic;
 using Unity.Netcode;
 using UnityEngine;
 
-<<<<<<< HEAD
-public class CoinSpawner : NetworkBehaviour
-{
-    [SerializeField] private RespawningCoin coinPrefab;
-
-    [SerializeField] private int maxCoins = 50;
-    [SerializeField] private int coinValue = 10;
-    [SerializeField] private Vector2 xSpawnRange;
-    [SerializeField] private Vector2 ySpawnRange;
-    [SerializeField] private LayerMask layerMask;
-
-    private Collider2D[] coinBuffer = new Collider2D[1];
-    private float coinRadius;
-=======
 /// <summary>
 /// Este script gestiona la generación y reaparición de monedas en el mapa en multiplicador.
 /// Solo el servidor genera las monedas en posiciones aleatorias válidas (sin colisiones).
@@ -41,7 +27,6 @@ public class CoinSpawner : NetworkBehaviour
     /// Se asigna a cada moneda spawneada para que todas tengan el mismo valor.
     /// </summary>
     [SerializeField] private int coinValue = 10;
->>>>>>> main
 
     /// <summary>
     /// Rango de posiciones en el eje X donde pueden aparecer las monedas.
@@ -84,12 +69,6 @@ public class CoinSpawner : NetworkBehaviour
     /// </summary>
     public override void OnNetworkSpawn()
     {
-<<<<<<< HEAD
-        if (!IsServer) { return; }
-
-        coinRadius = coinPrefab.GetComponent<CircleCollider2D>().radius;
-
-=======
         // Solo el servidor genera las monedas
         // Los clientes las reciben automáticamente del servidor
         if (!IsServer) { return; }
@@ -100,7 +79,6 @@ public class CoinSpawner : NetworkBehaviour
 
         // Genera la cantidad máxima de monedas configuradas
         // Cada una se spawnea en una posición válida (sin colisiones)
->>>>>>> main
         for (int i = 0; i < maxCoins; i++)
         {
             SpawnCoin();
@@ -114,21 +92,13 @@ public class CoinSpawner : NetworkBehaviour
     /// </summary>
     private void SpawnCoin()
     {
-<<<<<<< HEAD
-=======
         // Instancia una moneda en una posición válida obtenida por GetSpawnPoint()
         // Quaternion.identity = sin rotación (rotación neutra)
->>>>>>> main
         RespawningCoin coinInstance = Instantiate(
             coinPrefab,
             GetSpawnPoint(),
             Quaternion.identity);
 
-<<<<<<< HEAD
-        coinInstance.SetValue(coinValue);
-        coinInstance.GetComponent<NetworkObject>().Spawn();
-
-=======
         // Asigna el valor configurado a la moneda
         // Todas las monedas en este spawner tienen el mismo valor
         coinInstance.SetValue(coinValue);
@@ -140,7 +110,6 @@ public class CoinSpawner : NetworkBehaviour
         // Se suscribe al evento de recolección de la moneda
         // Cuando la moneda es recogida, HandleCoinCollected se ejecutará automáticamente
         // Permite que el spawner sepa cuándo reaparición la moneda
->>>>>>> main
         coinInstance.OnCollected += HandleCoinCollected;
     }
 
@@ -150,13 +119,10 @@ public class CoinSpawner : NetworkBehaviour
     /// </summary>
     private void HandleCoinCollected(RespawningCoin coin)
     {
-<<<<<<< HEAD
-=======
         // Cuando una moneda se recoge:
         // - Se mueve a otra posición aleatoria
         // - Se reinicia (la bandera alreadyCollected se pone a false)
         // Asigna una nueva posición aleatoria válida a la moneda
->>>>>>> main
         coin.transform.position = GetSpawnPoint();
 
         // Reinicia la moneda para que pueda ser recolectada nuevamente
@@ -173,16 +139,11 @@ public class CoinSpawner : NetworkBehaviour
     {
         float x = 0;
         float y = 0;
-<<<<<<< HEAD
-        while (true)
-        {
-=======
 
         // Búsqueda infinita hasta encontrar una posición válida (sin colisiones)
         while (true)
         {
             // Genera una posición X aleatoria dentro del rango especificado
->>>>>>> main
             x = Random.Range(xSpawnRange.x, xSpawnRange.y);
 
             // Genera una posición Y aleatoria dentro del rango especificado
@@ -190,9 +151,6 @@ public class CoinSpawner : NetworkBehaviour
 
             // Crea un Vector2 con las coordenadas generadas
             Vector2 spawnPoint = new Vector2(x, y);
-<<<<<<< HEAD
-            int numColliders = Physics2D.OverlapCircleNonAlloc(spawnPoint, coinRadius, coinBuffer, layerMask);
-=======
 
             // Verifica si hay colisiones en ese punto
             // OverlapCircleNonAlloc es más eficiente que OverlapCircle porque reutiliza el array
@@ -201,7 +159,6 @@ public class CoinSpawner : NetworkBehaviour
             int numColliders = Physics2D.OverlapCircleNonAlloc(spawnPoint, coinRadius, coinBuffer, layerMask);
 
             // Si no hay colisiones (numColliders == 0), la posición es válida
->>>>>>> main
             if (numColliders == 0)
             {
                 // Devuelve esta posición para spawnear la moneda

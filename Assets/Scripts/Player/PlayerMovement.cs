@@ -1,13 +1,10 @@
 using Unity.Netcode;
 using UnityEngine;
 
-<<<<<<< HEAD
-=======
 /// <summary>
 /// Controla el movimiento del jugador local y asigna la cámara al jugador propietario.
 /// Solo el cliente que es dueño de este objeto procesa la entrada.
 /// </summary>
->>>>>>> main
 public class PlayerMovement : NetworkBehaviour
 {
     [Header("References")]
@@ -23,18 +20,6 @@ public class PlayerMovement : NetworkBehaviour
 
     private Vector2 previousMovementInput;
 
-<<<<<<< HEAD
-
-    public override void OnNetworkSpawn()
-    {
-        if(!IsOwner) return;
-
-        inputReader.MoveEvent += HandleMove;
-    }
-
-   
-
-=======
     public override void OnNetworkSpawn()
     {
         // Verificar si el objeto es propiedad del cliente local antes de suscribirse al evento
@@ -51,33 +36,13 @@ public class PlayerMovement : NetworkBehaviour
         }
     }
 
->>>>>>> main
     public override void OnNetworkDespawn()
     {
-        if(!IsOwner) return;
+        if (!IsOwner) return;
 
         inputReader.MoveEvent -= HandleMove;
-    } 
-
-<<<<<<< HEAD
-    void Update()
-    {
-        if(!IsOwner) return;
-
-        float zRotation = previousMovementInput.x * -turningRate * Time.deltaTime;
-        bodyTransform.Rotate(0f, 0f, zRotation);
-        
     }
 
-    void FixedUpdate()
-    {
-        if(!IsOwner) return;
-
-        rb.linearVelocity = movementSpeed * previousMovementInput.y * (Vector2) bodyTransform.up;
-        
-    }
-     private void HandleMove(Vector2 movementInput)
-=======
     private void Update()
     {
         if (!IsOwner) return;
@@ -96,7 +61,6 @@ public class PlayerMovement : NetworkBehaviour
     }
 
     private void HandleMove(Vector2 movementInput)
->>>>>>> main
     {
         previousMovementInput = movementInput;
     }
