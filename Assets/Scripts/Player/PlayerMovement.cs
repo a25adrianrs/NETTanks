@@ -1,6 +1,13 @@
 using Unity.Netcode;
 using UnityEngine;
 
+<<<<<<< HEAD
+=======
+/// <summary>
+/// Controla el movimiento del jugador local y asigna la cámara al jugador propietario.
+/// Solo el cliente que es dueño de este objeto procesa la entrada.
+/// </summary>
+>>>>>>> main
 public class PlayerMovement : NetworkBehaviour
 {
     [Header("References")]
@@ -16,6 +23,7 @@ public class PlayerMovement : NetworkBehaviour
 
     private Vector2 previousMovementInput;
 
+<<<<<<< HEAD
 
     public override void OnNetworkSpawn()
     {
@@ -26,6 +34,24 @@ public class PlayerMovement : NetworkBehaviour
 
    
 
+=======
+    public override void OnNetworkSpawn()
+    {
+        // Verificar si el objeto es propiedad del cliente local antes de suscribirse al evento
+        if (!IsOwner) return;
+
+        // Suscribirse al evento de movimiento del InputReader
+        // Esto permite que el método HandleMove se llame cada vez que el jugador proporciona una entrada de movimiento
+        inputReader.MoveEvent += HandleMove;
+
+        CameraFollow cameraFollow = Camera.main.GetComponent<CameraFollow>();
+        if (cameraFollow != null)
+        {
+            cameraFollow.SetTarget(transform);
+        }
+    }
+
+>>>>>>> main
     public override void OnNetworkDespawn()
     {
         if(!IsOwner) return;
@@ -33,6 +59,7 @@ public class PlayerMovement : NetworkBehaviour
         inputReader.MoveEvent -= HandleMove;
     } 
 
+<<<<<<< HEAD
     void Update()
     {
         if(!IsOwner) return;
@@ -50,6 +77,26 @@ public class PlayerMovement : NetworkBehaviour
         
     }
      private void HandleMove(Vector2 movementInput)
+=======
+    private void Update()
+    {
+        if (!IsOwner) return;
+        // Calcula cuánto debe girar el tanque en este frame según el input horizontal,
+        // la velocidad de giro y el tiempo entre frames (para que el movimiento sea suave)
+        float zRotation = previousMovementInput.x * -turningRate * Time.deltaTime;
+        bodyTransform.Rotate(0f, 0f, zRotation);
+    }
+
+    private void FixedUpdate()
+    {
+        if (!IsOwner) return;
+        // Mueve el tanque hacia delante o atrás según el input vertical,
+        // usando la dirección actual del tanque (hacia donde está mirando)
+        rb.linearVelocity = movementSpeed * previousMovementInput.y * (Vector2)bodyTransform.up;
+    }
+
+    private void HandleMove(Vector2 movementInput)
+>>>>>>> main
     {
         previousMovementInput = movementInput;
     }
